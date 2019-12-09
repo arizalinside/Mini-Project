@@ -7,7 +7,7 @@ function checkToken(req, res, next) {
     let token = req.cookies.token;
     if (!token) return res.redirect('/login')
 
-    axios('http://127.0.0.1:3000/api/v1/user/search', {
+    axios(`${process.env.BASE_URL}/api/v1/user/search`, {
         method: 'GET',
         headers: {
             'Authorization' : req.cookies.token,
