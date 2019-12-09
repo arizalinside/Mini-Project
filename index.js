@@ -26,7 +26,7 @@ mongoose.connect(process.env.DB_CONNECTION, {
     useUnifiedTopology: true
 })
     .then(data => {
-        app.listen(3000, () => console.log(`Listening on port ${port}`))
+        app.listen(port, () => console.log(`Listening on port ${port}`))
     })
     .catch(err => {
         console.log(`Failed to connect to Database.`)
