@@ -42,7 +42,13 @@
 }
 
 a {
+    font-size: 35px;
+    text-decoration: none;
     font-family: 'Bebas Neue', cursive;
+}
+
+.body {
+    padding: 0px 0 20px 0;
 }
 
 

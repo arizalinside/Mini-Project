@@ -27,5 +27,23 @@ module.exports = {
                     post: [response.data.data]
                 })
             })
-    }
+    },
+    destroy: function(req, res) {
+        fetch(`${process.env.BASE_URL}/api/v1/posts/${req.params._id}`, {
+          method: 'DELETE',
+          headers: {
+            'Accept':'application/json',
+            'Authorization': req.cookies.token
+          }
+        })
+          .then(response => {
+            res.redirect('/')
+          })  
+      },
+    
+      create: function(req, res) {
+        res.render('pages/create', {
+          user: req.user
+        })
+      }
 }
