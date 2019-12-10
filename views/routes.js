@@ -20,11 +20,12 @@ function checkToken(req, res, next) {
             next()
         })
         .catch(err => {
+            console.log(err)
             res.redirect('/login')
         })
 }
 
-router.get('/', postController.index)
+router.get('/',checkToken, postController.index)
 router.get('/post/:_id', postController.show)   
 
 
