@@ -6,7 +6,7 @@ $("#button").click(function () {
         password: $("#password").val().toString()
     }
 
-    fetch('/api/v1/user/register', {
+    fetch('/api/v1/auth/register', {
         method: 'POST',
         headers: {
             'Content-Type' : 'application/json'

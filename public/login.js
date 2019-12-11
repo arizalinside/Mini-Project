@@ -13,7 +13,7 @@ $("#button").click(function () {
         password: $("#password").val().toString()
     }
 
-    fetch('/api/v1/user/login', {
+    fetch('/api/v1/auth/login', {
         method: 'POST',
         headers: {
             'Content-Type' : 'application/json'

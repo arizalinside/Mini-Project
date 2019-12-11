@@ -1,24 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="/css/style.css"> 
-    <link href="https://fonts.googleapis.com/css?family=Bebas+Neue&display=swap" rel="stylesheet"> 
-    <title>Welcome!</title>
+<%-include('../partials/head', {css: 'index.css'}}%>
 </head>
 <body>
+    <%-include('../components/navbar.ejs', {email: user.email})%>
 <div class="posts">
     <% post.forEach(i => { %>
-        <div class="title">
-            <a href="/post/<%=i._id%>"><%= i.title %></a>
-        <div id="post-<%= i._id %>" class="post">
-            <div class="body">
-                <p><%= i.body %></p>
-            </div>
-        </div>
-    </div>
+    <%-include('../partials/post', {post: i, showButton: showButton })%>     
 </div>
     <% } ) %>
 </body>

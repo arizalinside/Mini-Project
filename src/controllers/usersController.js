@@ -1,7 +1,8 @@
 const User = require('../models/user.js');
 const bcrypt = require('bcryptjs');
 const salt = bcrypt.genSaltSync(10);
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const response = require('../helpers/responseFormatter.js');
 
 module.exports = {
 register: function(req, res) {
@@ -12,16 +13,10 @@ register: function(req, res) {
         encryptedPassword: password
     })
     .then(data => {
-        res.status(201).json({
-            success: true,
-            data: data
-        })
+        response(res, [true, data], 200)
     })
     .catch(err => {
-        res.status(422).json({
-            success: false,
-            errors: err
-        })
+        response(res, [false, err], 422)
     })
 },
 login: function(req, res) {
@@ -29,41 +24,36 @@ login: function(req, res) {
         email: req.body.email
     })
             .then(user => {
-                if(!user) return res.status(404).json({
-                success: false,
-                errors: "Oops, email isn't registered"
-            })
-
+                if(!user) return response(res, [false, "Email hasn't registered!"], 422)
             let isPasswordCorrect = bcrypt.compareSync(req.body.password, user.encryptedPassword);
-            if (!isPasswordCorrect) return res.status(401).json({
-                success: false,
-                errors: "Wrong password!"
-            })
+            if (!isPasswordCorrect) return response(res, [false, "Wrong password!"], 422)
 
             let token = jwt.sign({
-                _id: user._id}, 'RAHASIA NEGARA')
+                _id: user._id
+            }, process.env.SECRET_KEY)
 
-            res.status(200).json({
-                success: true,
-                data: token
-            })
+            response(res, [true, token], 200)
         })
         .catch(err => {
-            res.status(400).json ({
-                success: false,
-                errors: err
-            })
+            response(res, [false, err], 422)
         })
 },
 
 search: function(req, res) {
     User.findById(req.user._id)
         .then(data => {
-            res.status(200).json ({
-                success: true,
-                data: data
-            })
+            response(res, [true, data], 200)
         })
-}
+},
+findall: function(req, res) {
+    User.find({})
+      .then(data => {
+        response(res, [true, data], 200)
+        console.log(data)
+      })
+      .catch(err => {
+        response(res, [false, err], 422)
+      })
+  }
 
 }

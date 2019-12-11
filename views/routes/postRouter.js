@@ -11,6 +11,6 @@ const {
 router.get('/', authenticate, index);
 router.get('/posts/:_id', authenticate, show);
 router.get('/destroy:_id', authenticate, destroy);
-router.get('/create', authenticate, create)
+router.get('/create', authenticate, create);
 
 module.exports = router;
